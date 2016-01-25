@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="omegaPopup" ng-controller="PopupCtrl" ng-csp>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {{'popup_title' | tr}}
+        </title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="data:text/css;charset=utf-8," data-href="css/bootstrap-theme.min.css" rel="stylesheet" id="bs-theme-stylesheet">
+        <link rel="stylesheet" href="css/popup.css">
+
+    </head>
+
+<body ng-class="{&quot;with-condition-form&quot;: showConditionForm}" style="">
+
+<div id="first_run" style="display: none;">
+    <style type="text/css">
+        #intro_screen{
+            width:692px;height:480px;
+            overflow:hidden
+        }
+        #intro_screen img{
+            display:inline-block;
+            margin:0px;
+            padding:0px;
+        }
+        #intro_screen_content
+        {
+            width:2076px;
+        }
+    </style>
+    <div id="intro_screen" >
+        <div id="intro_screen_content">
+            <img src="img/intro/1.jpg" usemap="#Map" border="0" id="intro_step1" /><img src="img/intro/2.jpg" usemap="#Map2" border="0" id="intro_step2" /><img src="img/intro/3.jpg" usemap="#Map3" border="0" id="intro_step3" />
+            <map name="Map" id="Map">
+                <area shape="rect" coords="267,397,418,451" href="#" id="intro_btn_go_step2" />
+                <area shape="rect" coords="267,451,419,472" href="#" class="intro_btn_finsh" />
+            </map>
+
+            <map name="Map2" id="Map2">
+                <area shape="rect" coords="271,397,411,446" href="#"  id="intro_btn_go_step3" />
+                <area shape="rect" coords="271,446,418,474" href="#"  class="intro_btn_finsh" />
+            </map>
+
+            <map name="Map3" id="Map3">
+                <area shape="rect" coords="274,386,455,444" href="#" class="intro_btn_finsh" />
+                <area shape="rect" coords="274,444,453,474" href="#"  id="intro_btn_go_step1"  />
+            </map>
+        </div>
+    </div>
+</div>
+
+
+<div id="not_controllable" style="display: none; margin: 10px;  width: 250px; padding-bottom: 20px;">
+    <p style="color: #f00; font-weight: bold;">检测到冲突插件</p>
+    <p>发现其他代理上网插件，可能会造成超级VPN工作不正常，是否禁用其他代理插件？</p>
+    <ul id="conflict_list">
+        <li></li>
+    </ul>
+    <span style="float: left"><a id="not_disable_other" href="#" style="color: #868686;">取消</a> </span><span style="float: right"><input class="btn btn-success btn-sm" type="button" value="确定" id="disable_other"></span>
+</div>
+<div id="controllable" style="width: 260px;">
+
+    <input type="hidden" id="page" value="popup">
+  <div id="control_panel" >
+      <div style="text-align:center; line-height:42px; font-size:16px; height: 42px;">
+          <span style="float: left; padding-left: 5px; display: inline-block; width: 60px;">
+              <a href="#"  id="goback_btn" style="font-size: 14px; color: #999; text-decoration: none; display: none"><i class="glyphicon glyphicon-chevron-left"></i> 返回</a>&nbsp;
+          </span>
+          <span style="float: left; padding-left: 0px;">
+            <img src="img/logo.png" height="30">
+          </span>
+
+      </div>
+
+      <div id="main_control">
+          <input type="button" id="clear_node_list" value="删除所有线路" style="display: none">
+                 <div class="divider liner"></div>
+                  <div class="user_content">
+                      <div class="now_domain" style="height:80px;">
+
+                          <div class="tip">帐号信息
+                              <div style="float: right; padding-right: 10px; padding-top: 5px; position: absolute; margin-top: -23px; font-size: 12px; margin-left: 184px; ">
+                                  <a href="#" role="button" id="open_options_btn" ng-click="openOptions()"
+                                     data-shortcut="option" class="btn btn-info btn-sm" style="padding: 0px; padding-left: 5px; padding-right: 5px; text-shadow: 0 0 0; ">帮助中心</a>
+                              </div>
+
+                          </div>
+                          <div class="info" style="height:30px;clear: both; padding-top: 10px; padding-left: 10px;">
+                              <div  style="float: left; width: 120px; overflow: hidden" id="svpn_username"></div>
+
+                              <div class="btn btn-warning btn-sm" style="float: right" id="link_exit">退出</div>
+                              <div class="btn btn-warning btn-sm" style="float: right" id="btn_recharge">
+                                  <div style="position: absolute; margin-top: -40px; color: #f00; margin-left: -10px; " id="charge_promotion_tip"></div>
+                                  续费
+                              </div>
+                          </div>
+                          <div class="info"  style="height:30px;clear: both; padding-top: 10px; padding-left: 10px;">
+                              <span   style="float: left">账号剩余 <strong class="text-success" id="svpn_days"></strong></span>
+                          </div>
+
+                      </div>
+                      <div class="divider liner"  id="now_domain_liner"></div>
+
+                      <div class="now_domain" id="now_domain" style="display: none; height: auto; clear: both;">
+                          <p class="tip">当前域名</p>
+                          <p id="domain_name" style="display: none"></p>
+                          <p class="domain text-success" id="domain_add_tip" style="display: none; font-weight: bold; height: 50px; line-height: 50px;padding-left:0px;text-align:center">
+                              <button type="button" class="btn btn-danger btn-sm" id="btn_remove_domain" ><i class="glyphicon glyphicon-minus"></i> 将<span class="show_domain_name"></span>移除规则列表</button>
+                          </p>
+                          <p class="domain text-success" id="domain_add_btn" style="display: none; font-weight: bold; height: 50px; line-height: 50px;padding-left:0px;text-align:center">
+                              <button type="button" class="btn btn-info btn-sm" id="btn_add_domain" ><i class="glyphicon glyphicon-plus"></i> 将<span class="show_domain_name"></span>添加到规则列表</button>
+                          </p>
+
+                      </div>
+                      <div class="divider liner">                  <div style="position: absolute;">
+                          <button class="btn btn-danger btn-sm" style="height: 20px; line-height: 18px;
+                       padding-bottom: 0px; padding-top: 0px; margin-top: 10px; margin-left: 78px; padding-left: 7px; padding-right: 7px; " id="btn_apply_random_node">打不开网页？点击我试试！</button>
+                      </div></div>
+                      <div class="now_domain">
+                          <p class="tip">运行模式</p>
+                          <div class="proxy_mode_select" style="margin: 0px auto;">
+                              <div class="btn-group" role="group" aria-label="..." >
+                                  <button type="button" class="btn btn-default btn_mode" id="btn_mode_all">全局 </button>
+                                  <button type="button" class="btn btn-success btn_mode" id="btn_mode_require">按需 </button>
+                                  <button type="button" class="btn btn-default btn_mode" id="btn_mode_close" >关闭 </button>
+                              </div>
+
+                          </div>
+<div class="proxy_mode_tip" id="proxy_tip_all">
+    <div class="tip_pointer"></div>
+    全局模式：所有网址全部使用代理，会造成中国（或您所在国家）国内的网站速度变慢。
+</div>
+                          <div class="proxy_mode_tip" id="proxy_tip_require">
+                              <div class="tip_pointer"></div>
+                              按需模式：只有“自动加速列表”中的网址使用代理。
+                          </div>
+                          <div class="proxy_mode_tip" id="proxy_tip_close">
+                              <div class="tip_pointer"></div>
+                              关闭：不使用代理。
+                          </div>
+
+
+                      </div>
+                  </div>
+
+                  <div class="subtitle node_list_tip">当前加速线路</div>
+                  <div class="expander node_list" id="btn_select_node" >
+                      <i class="glyphicon glyphicon-signal"></i> <span id="now_node_selected">正在加载...</span> <span id="node_list_expand_icon" > <span style="color: #999">选择线路</span> <i class="glyphicon glyphicon-chevron-right"></i></span>
+                  </div>
+
+                  <div class="subtitle">加速规则</div>
+                  <div class="expander node_list" id="btn_select_mode"  >
+                      <i class="glyphicon glyphicon-cog"></i> <span >自动加速列表</span> <span id="node_list_expand_icon2" > <span style="color: #999">点击编辑</span> <i class="glyphicon glyphicon-chevron-right"></i></span>
+                  </div>
+
+      </div>
+      <div id="rules_list" style="display: none;">
+          <div class="search_domain">
+              <div  class="search_domain_text">
+
+                  <i class="glyphicon glyphicon-search"></i>
+                  <input type="text" id="search_domain_text_input">
+                  </div>
+          </div>
+          <ul  class="popup-menu-nav nav nav-pills nav-stacked" style="overflow: hidden; overflow-y: scroll;height: 488px; background-color: #fff;" >
+
+           </ul>
+
+      </div>
+      <div id="profile_list" style="display: none">
+
+              <ul ng-hide="showConditionForm" class="popup-menu-nav nav nav-pills nav-stacked" style="overflow: hidden; overflow-y: scroll; height: 516px; width: 100%" >
+
+
+                  <li class="divider">
+                  </li>
+                  <div style="height: 30px; padding-left: 30px; line-height: 30px; font-weight: bold; background-color: #efefef ">
+                      <span style="display: inline-block; padding-right: 90px;">线路名称</span>
+                      <span style="display: inline-block; ">负载</span>
+                  </div>
+                  <button type="button" id="retry_node_list" class="btn btn-success btn-sm"  style="position: absolute; margin-left: 60px; margin-top: 190px; display: none"><i class="glyphicon glyphicon-repeat"></i> 尝试重新加载线路</button>
+                  <div id="custom_profile_before"></div>
+                      <li ng-repeat="profile in customProfiles" t="[{{profile.  }}]"  ng-class="{active: isActive(profile.name), &quot;bg-info&quot;: isEffective(profile.name)}"
+                          dropdown class="profile custom-profile">
+                          <a href="#" role="button" ng-click="applyProfile(profile)" ng-if="!profile.validResultProfiles"
+                             title="">
+                        <span omega-profile-inline="profile" icon="getIcon(profile)" options="availableProfiles"
+                              disp-name="dispNameFilter">
+                        </span>
+                          </a>
+                          <a href="#" role="button" ng-click="applyProfile(profile);" ng-if="!!profile.validResultProfiles"
+                             title="{{getProfileTitle(profile)}}" class="profile-with-default-edit">
+                        <span omega-profile-inline="profile" icon="getIcon(profile)" options="availableProfiles"
+                              disp-name="dispNameFilter">
+                        </span>
+                              [{{profile.defaultProfileName}}]
+                              <button href="#" role="button" ng-click="$event.stopPropagation()" class="dropdown-toggle btn btn-default">
+
+                              </button>
+                          </a>
+                          <ul ng-if="!!profile.validResultProfiles" class="dropdown-menu">
+                              <li ng-repeat="p in profile.validResultProfiles" ng-class="{active: p.name == profile.defaultProfileName}">
+                                  <a href="#" role="button" ng-click="setDefaultProfile(profile.name, p.name)"
+                                     title="{{getProfileTitle(profile)}}">
+                                <span omega-profile-inline="p" options="availableProfiles" disp-name="dispNameFilter">
+                                </span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+                  <div id="custom_profile_after"></div>
+                  <li ng-show="!!currentDomain &amp;&amp; validResultProfiles.length" class="divider">
+                  </li>
+                  <li ng-show="!!currentProfileCanAddRule">
+                      <a href="#" role="button" ng-click="showConditionForm = true" data-shortcut="addRule">
+                    <span class="glyphicon glyphicon-plus">
+                    </span>
+                    <span>
+                        {{'popup_addCondition' | tr}}
+                    </span>
+                      </a>
+                  </li>
+
+              </ul>
+
+      </div>
+
+      <div id="bottom_content" style="padding-top: 20px; padding-bottom: 5px;">
+          <div id="update_tip" style="border: 1px solid #FFED90; background-color: #FFFAE3; padding: 5px; color: #f00; margin: 5px; border-radius: 5px; text-align: center ;  display: none; margin-bottom: 20px;">
+              <a href="#" target="_blank" style="color: #f00">新版本发布啦！点击立即升级！</a>
+          </div>
+          <p  class="small text-muted text-center ng-binding">
+              超级VPN
+          </p>
+          <p id="login_bottom" class="small text-muted text-center ng-binding">
+              <span class="self_update_content" data-name="svpn_bottom"></span>
+          </p>
+      </div>
+
+  </div>
+        <script src="js/log_error.js">
+        </script>
+        <script src="lib/FileSaver/FileSaver.js">
+        </script>
+        <script src="js/omega_target_web_basics.js">
+        </script>
+        <script src="js/popup_basics.js">
+        </script>
+        <script src="lib/jquery/jquery.min.js">
+        </script>
+        <script src="js/API.js"></script>
+        <script src="js/common.js"></script>
+        <script src="lib/angular/angular.min.js">
+        </script>
+        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js">
+        </script>
+        <script src="lib/angular-ui-utils/validate.min.js">
+        </script>
+        <script src="js/omega_target_web.js">
+        </script>
+        <script src="js/omega_decoration.js">
+        </script>
+        <script src="js/popup.js">
+        </script>
+</div>
+    </body>
+
+</html>

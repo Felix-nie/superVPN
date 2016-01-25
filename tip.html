@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>恭喜您登录成功啦！</title>
+<script src="lib/jquery/jquery.min.js"></script>
+</head>
+
+<body style="background-image:url('img/browser_tip/default.jpg'); background-color:#666; background-repeat:no-repeat; background-position:top right" />
+<script type="text/javascript">
+    function getBrowserInfo()
+    {
+        var agent = navigator.userAgent.toLowerCase() ;
+
+        var regStr_ie = /msie [\d.]+;/gi ;
+        var regStr_ff = /maxthon\/[\d.]+/gi
+        var regStr_chrome = /chrome\/[\d.]+/gi ;
+        var regStr_saf = /qqbrowser\/[\d.]+/gi ;
+
+        var body = $("body");
+        //QQBrowser
+        var browser_name = "";
+        var browser_version = "";
+
+        if(agent.indexOf("qqbrowser") > 0)
+        {
+            browser_name = "QQ浏览器";
+            body.css("background-image","url('img/browser_tip/qqbrowser.jpg')");
+        }
+        if(agent.indexOf("lbbrowser") > 0)
+        {
+            browser_name = "猎豹浏览器";
+            body.css("background-image","url('img/browser_tip/liebao.jpg')");
+        }
+		if (agent.indexOf("ubrowser") > 0)
+        {
+            browser_name = "UC浏览器";
+            body.css("background-image","url('img/browser_tip/UC.jpg')");
+        }
+        if (agent.indexOf("bidubrowser") > 0)
+        {
+            browser_name = "百度浏览器";
+            body.css("background-image","url('img/browser_tip/baidu.jpg')");
+        }
+        if (agent.indexOf("opr\/") > 0)
+        {
+            browser_name = "Opera浏览器";
+            body.css("background-image","url('img/browser_tip/opera.jpg')");
+        }
+
+        //Chrome
+        if(agent.indexOf("chrome") > 0)
+        {
+            browser_version=agent.match(regStr_chrome) ;
+        }
+
+
+    }
+    getBrowserInfo();
+</script>
+</body>
+</html>

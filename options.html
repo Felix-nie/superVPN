@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title ng-bind="windowTitle" class="ng-binding">超级VPN</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/angular-motion.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css2/options.css">
+
+
+<body class="">
+
+<div class="container" ui-view="">
+    <div class="row ng-scope">
+        <div class="nav-col col-xs-3">
+            <h1 class="ng-binding">
+                <img src="img/logo.png">
+            </h1>
+
+
+
+            <hr>
+
+            <div ng-controller="ProfileController" class="ng-scope">
+                <div class="profile panel panel-default">
+                    <div class="panel-body">
+
+                        <span class="name ng-binding" title="" id="svpn_username">
+                        </span>
+
+                    </div>
+
+                    <table class="table">
+                        <thead></thead>
+                        <tbody><tr>
+                            <td class="key ng-binding">
+                                服务期
+                            </td>
+                            <td class="value">
+                                <div ng-if="$root.isVIP()" class="ng-scope">
+                                <span class="text-muted ng-binding"> </span>
+                                <span class="text-success ng-scope ng-binding" id="svpn_days">
+
+                                </span>
+                                <span class="text-muted ng-binding"></span>
+                            </div>
+                            </td>
+                        </tr>
+                        </tbody></table>
+
+                    <div class="panel-footer">
+                        <button target="_blank" class="btn btn-primary btn-block" id="btn_charge">
+                            <span >续费 VIP</span>
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="nav-menu list-group">
+                <a href="#" id="btn_rules_list" class="list-group-item ng-scope selected" >规则列表</a>
+                <a href="#" id="btn_faq_list"  class="list-group-item ng-scope">帮助中心</a>
+                <a href="#" id="btn_fresh"  class="list-group-item ng-scope">新手帮助</a>
+            </div>
+
+            <p style="text-align: center; font-size: 10px;">版本号: <span id="version_show"></span></p>
+        </div>
+        <div class="main-col col-xs-9" id="rules_manage">
+            <div ui-view=""><div class="page-header ng-scope">
+                <h2 class="ng-binding">规则列表</h2>
+                <div class="clearfix"></div>
+            </div>
+
+                    <div class="input-group">
+                        <input type="text" id="add_domain_text" class="form-control " placeholder="请输入域名，按回车添加" >
+                        <div class="input-group-btn">
+                            <input type="submit" value="添加域名" class="btn btn-default" id="btn_add_domain">
+                        </div>
+                    </div>
+                    <div class="help-block">
+                       <span ng-if="!error" class="ng-scope ng-binding">在访问下面的的域名时，会自动使用<strong>超级VPN</strong>的代理服务器，解决无法访问问题</span>
+                    </div>
+
+                <style type="text/css">#block_list_container{margin: 0px; padding: 0px;}#block_list_container  li{list-style: none; list-style-type: none;
+               list-style-image: none; float: left; padding-left: 0px;padding-right: 10px; height: 30px;
+                line-height: 30px; display: block; margin: 0px; padding: 0px; margin-left: 5px; margin-right: 5px; margin-bottom: 15px;}
+                #block_list_container  li button span{display: inline-block; height:auto; width: 20px;}</style>
+                <div class="domains ng-scope">
+                    <div style="clear:both">
+                        <ul id="block_list_container">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-col col-xs-9" id="fresh_list" style="display: none; padding-top: 5px; padding-left: 5px; padding-right: 0px;">
+            <div ui-view=""><div class="page-header ng-scope">
+                <h2 class="ng-binding">新手帮助</h2>
+                <div class="clearfix"></div>
+            </div>
+                <div  class="center">
+                    <div class="mainCon" style="overflow: hidden">
+                        <img src="img/intro/a.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="main-col col-xs-9" id="faq_list" style="display: none; padding-top: 5px;">
+            <div ui-view=""><div class="page-header ng-scope">
+                <h2 class="ng-binding">常见问题</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div  class="center">
+                <div class="mainCon">
+                    <ul class="faqList">
+                        <li ref-data="1"><span class="qlist">Q</span><a>超级VPN支持那些浏览器/操作系统？</a>
+                        </li>
+                        <li ref-data="2"><span class="qlist">Q</span><a>超级VPN有哪些线路？</a>
+                        </li>
+                        <li ref-data="3"><span class="qlist">Q</span><a>超级VPN账号支持多少人使用，有没有流量限制，有没有限速？</a>
+                        </li>
+                        </li>
+                        <li ref-data="9"><span class="qlist">Q</span><a>访问国内网页速度慢如何解决</a>
+                        </li>
+                        <li ref-data="10"><span class="qlist">Q</span><a>访问海外网页速度慢如何解决</a>
+                        </li>
+
+                    </ul>
+                    <div id="qnum-1" class="hero-unit well ansCon">
+                        <h4>超级VPN支持那些浏览器/操作系统？</h4>
+                        <div class="h_hr"></div>
+                        <p >超级VPN 一般支持所有webkit内核的浏览器，比如谷歌浏览器、360浏览器、360极速、浏览器UC浏览器、猎豹浏览器、QQ浏览器等，最佳体验推荐使用Chrome官方浏览器。 Firefox和Safari因为相关接口功能缺失，目前暂时 无法支持 关于支持的操作系统，一般只要是webkit内核的浏览器都可以支持，所以Windows/Mac/Linux都可以使用,推荐Chrome浏览器</p>
+                        <button class="btn btn-success">返回</button>
+                    </div>
+                    <div id="qnum-2" class="hero-unit well ansCon">
+                        <h4>超级VPN有哪些线路？</h4>
+                        <div class="h_hr"></div>
+                        <p >超级VPN提供 国内、日本、台湾、香港、韩国、新加坡、美国等这些高速的线路，所有线路都已经实现SLA 99.9% 高可用和负载均衡，稳定性和速度都是同行无法媲美的。超级VPN线路和客户端提供的线路完全不同，不用担心 会相互影响。</p>
+                        <button class="btn btn-success">返回</button>
+                    </div>
+                    <div id="qnum-3" class="hero-unit well ansCon">
+                        <h4>超级VPN账号支持多少人使用，有没有流量限制，有没有限速？</h4>
+                        <div class="h_hr"></div>
+                        <p> 每个超级VPN账号只支持一个终端在线使用，如果你想开通多终端，请联系客服，超级VPN是没有任何流量和带宽速度限制，速度快慢主要取决于你的当前运营商网络国际出口的带宽拥挤程度，建议选择电信、联通 主流运营商 网络。 </p>
+                        <button class="btn btn-success">返回</button>
+                    </div>
+
+
+                    <div id="qnum-9" class="hero-unit well ansCon">
+                        <h4>访问国内网页速度慢如何解决？</h4>
+                        <div class="h_hr"></div>
+                        <p>
+                            超级VPN的默认链接模式选择是“全局”，可以切换“按需”链接模式来使用自己本地宽带进行访问国内网页，如果想访问特定的国外网页，只需要把域名增加到“规则列表”即可。
+                        </p>
+                        <button class="btn btn-success">返回</button>
+                    </div>
+                    <div id="qnum-10" class="hero-unit well ansCon">
+                        <h4>访问海外网页速度慢如何解决？</h4>
+                        <div class="h_hr"></div>
+                        <p> 超级VPN默认线路是随机选择，当然您也可以在当前加速线路里选择负载低的海外线路。
+                        </p>
+                        <button class="btn btn-success">返回</button>
+                    </div>
+
+                    <hr style="margin-top:40px;">
+                    <p class="h_p4" ><span style="font-size:18px;line-height: 30px;">声明:</span>
+                        <br> 1、本产品致力于服务全球网络加速，为全球优秀资源共享提供高速桥梁。使用本产品必须遵守相关法律法规。
+                        <br> 2、本产品禁止用于诈骗，色情，赌博，攻击，非法舆论等非法操作，一旦发现立即删除帐号不退款，并交警方处理
+                        <br> 3、由于使用本产品用于不当用途所造成的一切后果与本产品无关。
+                        <br> 4、本产品最终解释权归超级VPN所有。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="js/log_error.js"></script>
+<script src="lib/script.js/script.min.js"></script>
+<script src="js/API.js"></script>
+<script src="js/common.js"></script>
+<script src="js/setting.js"></script>
+
+</body></html>

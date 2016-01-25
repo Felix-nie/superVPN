@@ -1,0 +1,92 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>超级加速器-支付</title>
+    <meta name="keywords" content="超级加速器">
+    <meta name="description" content="超级加速器">
+
+    <link rel="stylesheet" type="text/css" href="css/cv.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/API.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/pay.js"></script>
+</head>
+<body style="background-color: #F5F5F5">
+
+<div style="border: 1px solid #eee; background-color: #fff; width: 400px; height: 300px; position: absolute;
+z-index: 99999; left: 50%; top:50%; margin-left: -250px; margin-top: -300px; border-radius: 5px; padding: 10px;  display: none " id="pay_status_panel">
+    <div style="text-align: center; line-height:200px; height: 200px; padding-left: 70px; padding-top: 50px; "><img src="img/alipay_big.png"></div>
+    <p>
+        <button type="button" class="btn btn-success" style="float: left;" id="btn_pay_success"  ><i class="glyphicon glyphicon-ok"></i> 我已支付成功</button>
+        <button type="button" class="btn btn-danger" style="float: right" id="btn_pay_failed"  ><i class="glyphicon glyphicon-remove"></i> 未支付成功</button>
+    </p>
+</div>
+<div style="background-color: #fff; opacity: 0.5; width: 100%; height: 100%; position: absolute; z-index: 9999;  display: none   " id="pay_status_panel_bg"></div>
+<div class="wrapper">
+    <div class="main_con clearfix">
+        <div style="width: 1001px; height: 39px; line-height: 39px; margin: 0px auto; padding-top: 30px; ">
+            <img src="img/logo.png">
+        </div>
+        <div class="logind" style="padding-top: 29px;">
+            <div class="logind_box">
+                <div class="logind_con clearfix">
+                    <div class="loginbox">
+                        <div class="loginbox_con">
+                            <h3>在线充值</h3>
+                            <ul>
+                                <li><label>支付方式： </label>
+                                    <select id="select_payment" class="plans" style="line-height:60px;">
+                                        <option value="alipay" selected>支付宝在线充值</option>
+                                    </select></li>
+                                <div id="div_alipay" style="">
+                                    <li><label>充值套餐： </label>
+                                        <select id="select_plans" class="plans" style="line-height:60px;">
+                                           <option value="365" price="180.00" selected>365天VIP套餐</option><option value="730" price="300.00" >730天VIP套餐</option><option value="ever" price="1800.00" >终身VIP套餐</option>
+                                        </select></li>
+                                    <li><label>支付金额： </label><input id="alipay_pay_price" disabled="disabled" name="username" type="text" value="180.00" class="ursename " style="width: 205px; height: 43px; margin-top: 10px;" /></li>
+                                    <li><label>超级加速器用户名： </label><input id="username" name="username" type="text" value="" class="username text_username" /></li>
+                                    <li><label>确认用户名：</label><input id="username_repeat" name="username_repeat" type="text" value="" class="username text_username" /></li>
+                                    <li  ><label> &nbsp; </label><span  id="layer" style="color: #f00; font-weight: bold;"></span></li>
+                                </div>
+
+                                <li><a href="#" class="fgot"></a><input id="submit" type="button" class="login_btn" value="提交订单">
+                                    <span id="login_msg" class="span_remind_all"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="div_alipay_tip" class="right" style="">
+                        <img src="img/alipay_big.png" />
+
+                        <h3 style="margin-top:20px;margin-bottom:10px;">支付宝在线充值</h3>
+                        <p>
+                            1.可使用支付宝余额进行支付，也可通过支付宝使用各大银行的网上银行支付
+                            无手续费，方便快捷<br />
+                            2.如果您通过支付宝账号支付，建议您在付款页面登录您的支付宝，您的交易记录会为您保留在支付宝交易记录中。
+                        </p>
+                    </div>
+
+                    <div class="log_reg_bottom"></div>
+
+                </div>
+                <div id="login_bottom" class="small text-muted text-center ng-binding" style="background-color: #fff; text-align: center; font-weight: bold; font-size: 14px;">
+                    <span class="self_update_content" data-name="svpn_bottom"></span>
+                </div>
+                <style>
+                    #login_bottom a{
+                        display: inline-block;
+                    }
+                </style>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

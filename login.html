@@ -1,0 +1,156 @@
+<html><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:blocked;}.ng-animate-blocked-transitions{transition:0s all!important;-webkit-transition:0s all!important;}</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title class="ng-binding">登录超级VPN</title>  
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/API.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/login_controller.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
+<body>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    登录提醒
+                </h4>
+            </div>
+            <div class="modal-body" id="kick_tip">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal" id="btn_kick">强制下线
+                </button>
+                <button type="button" data-dismiss="modal"  class="btn btn-primary">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<input type="hidden" id="page" value="login">
+<div class="container font-hei ng-scope" ng-controller="LoginPageController">
+    <div class="heading">
+        <h1 class="font-kai text-center text-danger ng-binding">
+            <img src="img/logo.png"> <span id="version" style="font-size: 14px; color: #aaa;"></span>
+        </h1>
+
+        <h2 class="font-kai text-center text-muted ng-binding">
+            上网本该如此简单
+        </h2>
+    </div>
+
+    <div class="login-box">
+        <a class="tab col-xs-6 ng-binding " id="tab_reg">注册</a>
+
+        <a class="tab col-xs-6 ng-binding active" id="tab_login">登录</a>
+
+       <form name="register" id="reg_box" class="register step ng-scope ng-pristine ng-invalid ng-invalid-required ng-invalid-format ng-invalid-equals" style="display: none"  novalidate="">
+        <div class="form-group" ng-class="{'is-loading': checkingName}" form-state="register.name">
+
+            <label class="ng-binding">账号</label>
+            <input name="name"  id="reg_username" class="form-control input-lg font-kai ng-isolate-scope ng-pristine ng-invalid ng-invalid-required ng-invalid-format"
+                   type="text" placeholder="请输入邮箱" >
+            <i class="form-control-feedback glyphicon glyphicon-ok"></i>
+            <div class=" " id="error_tip_reg_account"  style="display: none; color: #BF0000; padding-top: 10px;">
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                <span class="error ng-scope ng-binding" ng-if="register.name.$error.required">请输入账号</span>
+            </div>
+            <img class="form-control-feedback loading" src="/img/loading-bars-gray.svg" alt="loading">
+        </div>
+
+        <div class="form-group" form-state="register.password">
+
+            <label class="ng-binding">密码</label>
+            <input name="password" id="reg_password"  class="form-control input-lg font-kai ng-isolate-scope ng-pristine ng-invalid
+            ng-invalid-required ng-valid-minlength" type="password"  placeholder="请输入密码">
+            <div class=" "  id="error_tip_reg_password" style="display: none; color: #BF0000; padding-top: 10px;">
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                <span class="error ng-scope ng-binding" ng-if="register.password.$error.required" >请输入密码</span>
+            </div>
+            <a class="form-control-feedback glyphicon glyphicon-ok"></a>
+        </div>
+
+        <div class="form-group" id="">
+            <div class="errors ">
+                <span class="error ng-scope ng-binding" >请输入确认密码</span>
+            </div>
+            <label class="ng-binding"  id="error_tip_reg_password2">确认密码</label>
+            <input name="password2" id="reg_password2" class="form-control input-lg font-kai ng-isolate-scope ng-pristine ng-invalid ng-invalid-required ng-valid-minlength ng-invalid-equals"
+                   type="password" placeholder="请重复上面的密码">
+            <a class="form-control-feedback glyphicon glyphicon-ok"></a>
+        </div>
+        <button type="button" id="reg_btn" class="btn btn-block btn-success btn-lg" ng-disabled="submitting">
+            <span id="reg_btn_text" ng-hide="submitting" class="ng-binding">立即注册</span>
+            <img id="reg_ani" src="img/loading-bars.svg" alt="loading" ng-show="submitting" class="" style="display: none">
+        </button>
+    </form>
+        <form name="login" id="login_box" class="register step ng-scope ng-pristine ng-invalid ng-invalid-required ng-invalid-format ng-invalid-equals"  novalidate="">
+            <div class="form-group" >
+
+                <label class="ng-binding">账号</label>
+                <input name="name" id="login_username" value="1084271781@qq.com" class="form-control input-lg font-kai ng-isolate-scope ng-pristine ng-invalid ng-invalid-required ng-invalid-format"
+                       type="text" placeholder="请输入邮箱或用户名 " ng-model="name" focus-bind="focuses.name" ng-disabled="checkingName || submitting" ng-blur="checkNameExistence()" ng-change="clearNameValidity()" ui-validate="{format: '$root.validateNameFormat($value)'}" required="">
+                <i class="form-control-feedback glyphicon glyphicon-ok"></i>
+                <div class=""  id="error_tip_login_account" style="font-weight: bold; font-size: 12px; color: #f00; display: none">
+                    <i class="glyphicon glyphicon-exclamation-sign"></i>
+                    <span  ></span>
+                </div>
+                <img class="form-control-feedback loading" src="/img/loading-bars-gray.svg" alt="loading">
+            </div>
+
+            <div class="form-group" form-state="register.password">
+
+                <label class="ng-binding">密码</label>
+                <input name="password" id="login_password" value="13342261803" class="form-control input-lg font-kai ng-isolate-scope ng-pristine ng-invalid ng-invalid-required
+                ng-valid-minlength" type="password" ng-model="password" focus-bind="focuses.password" ng-disabled="submitting" required="" ng-minlength="6"
+                       placeholder="请输入密码">
+                <div class="errors "  id="error_tip_login_password">
+                    <span class="error ng-scope ng-binding" ng-if="register.password.$error.required"  ></span>
+                </div>
+                <a class="form-control-feedback glyphicon glyphicon-ok"></a>
+            </div>
+
+
+            <button type="submit" id="btn_login" class="btn btn-block btn-primary btn-lg" ng-disabled="submitting">
+                <span id="login_btn_text" ng-hide="submitting" class="ng-binding">登录</span>
+                <span id="login_ani" style="display: none" >正在登录 <img src="img/loading-bars.svg" alt="loading" ng-show="submitting" class="" ></span>
+            </button>
+            <a href="http://www.chaojivpn.com/buy" target="_blank" id="btn_charge_link">帐号续费</a>
+            <a id="btn_forget_password" class="pull-right ng-binding" target="_blank" href="tencent://message/?Menu=yes&amp;uin=800160809&amp;Service=58&amp;SigT=A7F6FEA02730C988A5C1575994D375A2057A5847A86298C4DE2D14BCCE27A4695872167603E163693205E8AA477C5F91B9428167F034B60E23C1DC5F44B9A1E2BEE3EA36E84A82FE1558C411FB2FF906ED5D08A8D943B18A8B7607D320B3DBA9DED0C34091EA31FE8912757A4EA3B6EC1CC32B83D5DB7953&amp;SigU=30E5D5233A443AB2A4223536CE64448CE69CCA6BB1BCEBE0E4C277959FB9C19DADFEC84DED084921BC181E5207FD642D056CA69ADAC7957E369408F96AB547206B0194A5DDC344AF">找回密码</a>
+            <div class="clearfix"></div>
+        </form>
+
+
+    </div>
+
+
+    <div class="alert alert-warning animated bounce ng-binding " id="error_tip">
+        请先登录 或 注册超级VPN帐号    &nbsp;&nbsp;&nbsp;&nbsp;  </a>
+
+    </div>
+
+    <div class="alert alert-warning animated bounce ng-binding ng-hide" ng-show="search().message">
+
+    </div>
+
+    <p id="login_bottom" class="small text-muted text-center ng-binding">
+        <span class="self_update_content" data-name="svpn_bottom"></span>
+    </p>
+</div>
+
+</body>
+</html>
